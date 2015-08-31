@@ -2,22 +2,19 @@ package jojofung;
 
 import java.util.Calendar;
 
-import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Invocation.Builder;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import jojofung.model.RecievedMessage;
-import jojofung.model.SentMessage;
+import jojofung.accesstoken.AccessTokenContainer;
+import jojofung.model.message.RecievedMessage;
+import jojofung.model.message.SentMessage;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -47,17 +44,8 @@ public class MyResource {
 		sentMessage.Content = recievedMsg.Content;
 		sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
 		sentMessage.MsgType = recievedMsg.MsgType;
+		System.out.println(AccessTokenContainer.accessToken.access_token);
 		return Response.status(Status.OK).entity(sentMessage.generate()).build();
 	}
 	
-	private String getAccessToken() {
-		//https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
-		WebTarget webTarget = ClientBuilder.newClient().target("https://api.weixin.qq.com");
-		Builder builder = webTarget.path("cgi-bin/token").queryParam("grant_type", "client_credential")
-				.queryParam("appid", "wx8fd2bd218f8bf783").queryParam("secret", "b2ed2394869ae24801a9c62c73954c8a")
-				.request();
-		JsonObject responseEntity = builder.get(JsonObject.class);
-		String token = responseEntity.getString("access_token");
-		return token;
-	}
 }
