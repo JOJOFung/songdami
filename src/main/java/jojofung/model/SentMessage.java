@@ -1,18 +1,18 @@
 package jojofung.model;
 
-import javax.xml.bind.annotation.XmlRootElement;
+/**
+ * For auto-generation will change < into &lt;, so we combine
+ * response message manually.
+ * 
+ * @author jojofeng
+ *
+ */
+public class SentMessage extends Message {
 
-@XmlRootElement(name="xml")
-public class SentMessage {
-
-	public String ToUserName;
-	
-	public String FromUserName;
-	
-	public String CreateTime;
-	
-	public String MsgType;
-	
-	public String Content;
-
+	public String generate() {
+		return "<xml><ToUserName>" + getCDATAProperty(this.ToUserName) + "</ToUserName><FromUserName>"
+				+ getCDATAProperty(this.FromUserName) + "</FromUserName><CreateTime>" + this.CreateTime
+				+ "</CreateTime><MsgType>" + getCDATAProperty(this.MsgType) + "</MsgType><Content>"
+				+ getCDATAProperty(this.Content) + "</Content></xml>";
+	}
 }

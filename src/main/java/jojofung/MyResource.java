@@ -3,7 +3,6 @@ package jojofung;
 import java.util.Calendar;
 
 import javax.json.JsonObject;
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +13,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import jojofung.model.RecievedMessage;
 import jojofung.model.SentMessage;
@@ -23,7 +24,6 @@ import jojofung.model.SentMessage;
  */
 @Path("myresource")
 public class MyResource {
-
 	/**
 	 * Method handling HTTP GET requests. The returned object will be sent to
 	 * the client as "text/plain" media type.
@@ -39,18 +39,18 @@ public class MyResource {
 
 	@POST
 	@Consumes({MediaType.APPLICATION_XHTML_XML, MediaType.APPLICATION_XML, MediaType.TEXT_XML})
-	@Produces({MediaType.APPLICATION_XHTML_XML, MediaType.APPLICATION_XML, MediaType.TEXT_XML, MediaType.TEXT_PLAIN, MediaType.TEXT_HTML})
-	public SentMessage answer(RecievedMessage recievedMsg) {
+	@Produces({MediaType.APPLICATION_XHTML_XML, MediaType.APPLICATION_XML, MediaType.TEXT_XML, MediaType.TEXT_PLAIN})
+	public Response answer(RecievedMessage recievedMsg) {
 		SentMessage sentMessage = new SentMessage();
 		sentMessage.FromUserName = recievedMsg.ToUserName;
 		sentMessage.ToUserName = recievedMsg.FromUserName;
 		sentMessage.Content = recievedMsg.Content;
 		sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
-		sentMessage.MsgType = "<![CDATA[你好]]>";
-		return sentMessage;
+		sentMessage.MsgType = recievedMsg.MsgType;
+		return Response.status(Status.OK).entity(sentMessage.generate()).build();
 	}
-
-	private String getToken() {
+	
+	private String getAccessToken() {
 		//https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET
 		WebTarget webTarget = ClientBuilder.newClient().target("https://api.weixin.qq.com");
 		Builder builder = webTarget.path("cgi-bin/token").queryParam("grant_type", "client_credential")
