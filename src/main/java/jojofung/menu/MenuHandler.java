@@ -19,7 +19,7 @@ import jojofung.model.menu.Menu;
 import jojofung.util.Constants;
 
 public class MenuHandler implements ServletContextListener {
-	private Logger _logger = LogManager.getLogger(MenuHandler.class);
+	private static final Logger LOGGER = LogManager.getLogger(MenuHandler.class);
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {

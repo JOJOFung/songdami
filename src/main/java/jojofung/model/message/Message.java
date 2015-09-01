@@ -1,8 +1,11 @@
 package jojofung.model.message;
 
-public class Message {
-	public static final String MSG_TEXT_TYPE = getCDATAProperty("text");
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "xml")
+public class Message {
+
+	// Base elements
 	public String ToUserName;
 
 	public String FromUserName;
@@ -11,7 +14,16 @@ public class Message {
 
 	public String MsgType;
 
+	// For event
+	public String Event;
+
+	public String EventKey;
+
+	// For text message
 	public String Content;
+
+	// For received message
+	public String MsgId;
 
 	public static String getCDATAProperty(String property) {
 		return "<![CDATA[" + property + "]]>";
