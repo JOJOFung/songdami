@@ -1,8 +1,5 @@
 package jojofung.model.menu;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement(name = "button")
 public class Button {
 
 	public String type;
