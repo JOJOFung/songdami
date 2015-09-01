@@ -16,7 +16,7 @@ public class AccessTokenHandler implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		accessTokenThread = new Thread(new AccessTokenThread());
+		accessTokenThread = new Thread(new AccessTokenQueryThread());
 		accessTokenThread.setDaemon(true);
 		// TODO
 		// Change to log
