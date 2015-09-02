@@ -28,7 +28,7 @@ public class MenuHandler implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		System.out.println("Create menues for song_dami....");
+		LOGGER.info("Create menues for song_dami....");
 		Menu menu = new Menu();
 		WebTarget webTarget = ClientBuilder.newClient().target(Constants.WEIXIN_API_HTTPS_URI);
 		do {
@@ -42,7 +42,7 @@ public class MenuHandler implements ServletContextListener {
 				.queryParam(Constants.ACCESS_TOKEN, AccessTokenContainer.accessToken.access_token).request(MediaType.APPLICATION_JSON_TYPE);
 		Entity<Menu> entity = Entity.json(menu);
 		JsonObject response = builder.post(entity, JsonObject.class);
-		System.out.println(response);
+		LOGGER.info(response);
 	}
 
 }

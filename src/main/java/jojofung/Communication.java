@@ -14,7 +14,6 @@ import javax.ws.rs.core.Response.Status;
 
 import jojofung.model.message.EventMessage;
 import jojofung.model.message.Message;
-import jojofung.model.message.ReceivedTextMessage;
 import jojofung.model.message.SentTextMessage;
 import jojofung.model.message.TextMessage;
 
@@ -22,7 +21,7 @@ import jojofung.model.message.TextMessage;
  * Root resource (exposed at "myresource" path)
  */
 @Path("myresource")
-public class MyResource {
+public class Communication {
 	/**
 	 * Method handling HTTP GET requests. The returned object will be sent to
 	 * the client as "text/plain" media type.

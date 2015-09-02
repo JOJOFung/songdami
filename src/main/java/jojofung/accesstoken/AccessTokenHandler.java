@@ -3,14 +3,19 @@ package jojofung.accesstoken;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class AccessTokenHandler implements ServletContextListener {
+	private static final Logger LOGGER = LogManager.getLogger(AccessTokenHandler.class);
+	
 	private Thread accessTokenThread;
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		// TODO
 		// Change to log
-		System.out.println("Stop access token handler thread.");
+		LOGGER.info("Stop access token handler thread.");
 		accessTokenThread.stop();
 	}
 
@@ -20,7 +25,7 @@ public class AccessTokenHandler implements ServletContextListener {
 		accessTokenThread.setDaemon(true);
 		// TODO
 		// Change to log
-		System.out.println("Start to retrieve access token....");
+		LOGGER.info("Start to retrieve access token....");
 		accessTokenThread.start();
 	}
 
