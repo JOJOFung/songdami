@@ -1,4 +1,4 @@
-package jojofung;
+package jojofung.handler.message;
 
 import java.util.Calendar;
 
@@ -12,6 +12,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import jojofung.model.message.EventMessage;
 import jojofung.model.message.Message;
 import jojofung.model.message.SentTextMessage;
@@ -21,7 +24,9 @@ import jojofung.model.message.TextMessage;
  * Root resource (exposed at "myresource" path)
  */
 @Path("myresource")
-public class Communication {
+public class MessageHandler {
+	private static final Logger LOGGER = LogManager.getLogger(MessageHandler.class);
+
 	/**
 	 * Method handling HTTP GET requests. The returned object will be sent to
 	 * the client as "text/plain" media type.
@@ -42,9 +47,9 @@ public class Communication {
 	// MediaType.TEXT_XML is weixin's real environment
 	public Response answer(Message msg) {
 		if (TextMessage.MSG_TEXT_TYPE.equals(msg.MsgType)) {
-			//ReceivedTextMessage recievedMsg = (ReceivedTextMessage) msg;
+			// ReceivedTextMessage recievedMsg = (ReceivedTextMessage) msg;
 			Message recievedMsg = msg;
-			
+			LOGGER.info("Received from [" + recievedMsg.FromUserName + "] with content [" + recievedMsg.Content + "]");
 			SentTextMessage sentMessage = new SentTextMessage();
 			sentMessage.FromUserName = recievedMsg.ToUserName;
 			sentMessage.ToUserName = recievedMsg.FromUserName;
@@ -53,9 +58,9 @@ public class Communication {
 			sentMessage.MsgType = SentTextMessage.MSG_TEXT_TYPE;
 			return Response.status(Status.OK).entity(sentMessage.generate()).build();
 		} else if (EventMessage.MSG_EVENT_TYPE.equals(msg.MsgType)) {
-			//EventMessage event = (EventMessage) msg;
+			// EventMessage event = (EventMessage) msg;
 			Message event = msg;
-			
+
 			System.out.println(event);
 		}
 		return Response.status(Status.OK).entity("").build();

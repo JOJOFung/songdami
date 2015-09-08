@@ -18,9 +18,9 @@
 		<url-pattern>/webapi/*</url-pattern>
 	</servlet-mapping>
 	<listener>
-		<listener-class>jojofung.accesstoken.AccessTokenHandler</listener-class>
+		<listener-class>jojofung.handler.accesstoken.AccessTokenHandler</listener-class>
 	</listener>
 	<listener>
-		<listener-class>jojofung.menu.MenuHandler</listener-class>
+		<listener-class>jojofung.handler.menu.MenuHandler</listener-class>
 	</listener>
 </web-app>

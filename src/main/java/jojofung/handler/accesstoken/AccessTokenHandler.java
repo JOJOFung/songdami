@@ -1,4 +1,4 @@
-package jojofung.accesstoken;
+package jojofung.handler.accesstoken;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

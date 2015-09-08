@@ -1,4 +1,4 @@
-package jojofung.menu;
+package jojofung.handler.menu;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import jojofung.accesstoken.AccessTokenContainer;
+import jojofung.model.accesstoken.AccessTokenContainer;
 import jojofung.model.menu.Menu;
 import jojofung.util.Constants;
 

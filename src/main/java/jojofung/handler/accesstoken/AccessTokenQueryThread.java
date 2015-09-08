@@ -1,16 +1,23 @@
-package jojofung.accesstoken;
+package jojofung.handler.accesstoken;
 
 import java.util.concurrent.TimeUnit;
 
 import javax.json.JsonObject;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation.Builder;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.ws.rs.client.WebTarget;
 
 import jojofung.model.accesstoken.AccessToken;
+import jojofung.model.accesstoken.AccessTokenContainer;
 import jojofung.util.Constants;
 
 public class AccessTokenQueryThread implements Runnable {
+	private static final Logger LOGGER = LogManager.getLogger(AccessTokenQueryThread.class);
+
 	private static final String EXPIRES_IN = "expires_in";
 	private static final String SONGDAMI_SECRET_VALUE = "b2ed2394869ae24801a9c62c73954c8a";
 	private static final String SONGDAMI_APPID_VALUE = "wx8fd2bd218f8bf783";
@@ -30,6 +37,7 @@ public class AccessTokenQueryThread implements Runnable {
 		String token = responseEntity.getString(Constants.ACCESS_TOKEN);
 		int expireSeconds = responseEntity.getInt(EXPIRES_IN);
 		accessToken.access_token = token;
+		LOGGER.info("Retrieved access token is:" + token);
 		accessToken.expires_in = expireSeconds;
 		return accessToken;
 	}
