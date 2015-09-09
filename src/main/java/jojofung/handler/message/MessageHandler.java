@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response.Status;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import jojofung.model.menu.Menu;
 import jojofung.model.message.EventMessage;
 import jojofung.model.message.Message;
 import jojofung.model.message.SentTextMessage;
@@ -55,13 +56,27 @@ public class MessageHandler {
 			sentMessage.ToUserName = recievedMsg.FromUserName;
 			sentMessage.Content = recievedMsg.Content;
 			sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
-			sentMessage.MsgType = SentTextMessage.MSG_TEXT_TYPE;
 			return Response.status(Status.OK).entity(sentMessage.generate()).build();
 		} else if (EventMessage.MSG_EVENT_TYPE.equals(msg.MsgType)) {
 			// EventMessage event = (EventMessage) msg;
 			Message event = msg;
-
-			System.out.println(event);
+			
+			if(event.EventKey.equals(Menu.BUY)){
+				SentTextMessage sentMessage = new SentTextMessage();
+				sentMessage.FromUserName = event.ToUserName;
+				sentMessage.ToUserName = event.FromUserName;
+				sentMessage.Content = "请问您的地址是哪里？";
+				sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
+				return Response.status(Status.OK).entity(sentMessage.generate()).build();
+			}else if(event.EventKey.equals(Menu.CONTACT)){
+				SentTextMessage sentMessage = new SentTextMessage();
+				sentMessage.FromUserName = event.ToUserName;
+				sentMessage.ToUserName = event.FromUserName;
+				sentMessage.Content = "我们的地址是：xxxx";
+				sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
+				return Response.status(Status.OK).entity(sentMessage.generate()).build();
+			}
+			
 		}
 		return Response.status(Status.OK).entity("").build();
 	}

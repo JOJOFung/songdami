@@ -88,6 +88,12 @@
     <dependent-module archiveName="sqlite-jdbc-3.8.11.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/xerial/sqlite-jdbc/3.8.11.1/sqlite-jdbc-3.8.11.1.jar">
       <dependency-type>uses</dependency-type>
     </dependent-module>
+    <dependent-module archiveName="bootstrap-3.3.5.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/webjars/bootstrap/3.3.5/bootstrap-3.3.5.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
+    <dependent-module archiveName="jquery-1.11.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/var/M2_REPO/org/webjars/jquery/1.11.1/jquery-1.11.1.jar">
+      <dependency-type>uses</dependency-type>
+    </dependent-module>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
     <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
   </wb-module>

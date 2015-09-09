@@ -14,7 +14,7 @@ public class SentTextMessage extends TextMessage {
 	public String generate() {
 		return "<xml><ToUserName>" + getCDATAProperty(this.ToUserName) + "</ToUserName><FromUserName>"
 				+ getCDATAProperty(this.FromUserName) + "</FromUserName><CreateTime>" + this.CreateTime
-				+ "</CreateTime><MsgType>" + getCDATAProperty(this.MsgType) + "</MsgType><Content>"
+				+ "</CreateTime><MsgType>" + getCDATAProperty(MSG_TEXT_TYPE) + "</MsgType><Content>"
 				+ getCDATAProperty(this.Content) + "</Content></xml>";
 	}
 }
