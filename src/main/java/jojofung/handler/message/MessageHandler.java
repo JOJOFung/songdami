@@ -61,14 +61,7 @@ public class MessageHandler {
 			// EventMessage event = (EventMessage) msg;
 			Message event = msg;
 			
-			if(event.EventKey.equals(Menu.BUY)){
-				SentTextMessage sentMessage = new SentTextMessage();
-				sentMessage.FromUserName = event.ToUserName;
-				sentMessage.ToUserName = event.FromUserName;
-				sentMessage.Content = "请问您的地址是哪里？";
-				sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
-				return Response.status(Status.OK).entity(sentMessage.generate()).build();
-			}else if(event.EventKey.equals(Menu.CONTACT)){
+			if(event.EventKey.equals(Menu.CONTACT)){
 				SentTextMessage sentMessage = new SentTextMessage();
 				sentMessage.FromUserName = event.ToUserName;
 				sentMessage.ToUserName = event.FromUserName;
