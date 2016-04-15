@@ -54,7 +54,7 @@ public class Menu {
 		Button button = new Button();
 		button.name = "大米";
 		button.type = Button.VIEW;
-		button.url = "http://54.187.0.133/songdami/";
+		button.url = "http://54.187.0.133/songdami/jojofung/product/rice.html";
 		return button;
 	}
 
@@ -62,7 +62,7 @@ public class Menu {
 		Button button = new Button();
 		button.name = "食用油";
 		button.type = Button.VIEW;
-		button.url = "http://54.187.0.133/songdami/";
+		button.url = "http://54.187.0.133/songdami/jojofung/product/oil.html";
 		return button;
 	}
 }
