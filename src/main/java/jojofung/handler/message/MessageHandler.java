@@ -60,16 +60,22 @@ public class MessageHandler {
 		} else if (EventMessage.MSG_EVENT_TYPE.equals(msg.MsgType)) {
 			// EventMessage event = (EventMessage) msg;
 			Message event = msg;
-			
-			if(event.EventKey.equals(Menu.CONTACT)){
+
+			if (event.EventKey.equals(Menu.CONTACT)) {
 				SentTextMessage sentMessage = new SentTextMessage();
 				sentMessage.FromUserName = event.ToUserName;
 				sentMessage.ToUserName = event.FromUserName;
 				sentMessage.Content = "我们的地址是：xxxx";
 				sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
 				return Response.status(Status.OK).entity(sentMessage.generate()).build();
+			} else if (event.EventKey.equals(Menu.BUY)) {
+				SentTextMessage sentMessage = new SentTextMessage();
+				sentMessage.FromUserName = event.ToUserName;
+				sentMessage.ToUserName = event.FromUserName;
+				sentMessage.Content = "请按照以下格式发送消息给我们，谢谢您的支持！";
+				sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
+				return Response.status(Status.OK).entity(sentMessage.generate()).build();
 			}
-			
 		}
 		return Response.status(Status.OK).entity("").build();
 	}
