@@ -47,37 +47,48 @@ public class MessageHandler {
 	// MediaType.APPLICATION_XML for test
 	// MediaType.TEXT_XML is weixin's real environment
 	public Response answer(Message msg) {
-		if (TextMessage.MSG_TEXT_TYPE.equals(msg.MsgType)) {
-			// ReceivedTextMessage recievedMsg = (ReceivedTextMessage) msg;
-			Message recievedMsg = msg;
-			LOGGER.info("Received from [" + recievedMsg.FromUserName + "] with content [" + recievedMsg.Content + "]");
-			SentTextMessage sentMessage = new SentTextMessage();
-			sentMessage.FromUserName = recievedMsg.ToUserName;
-			sentMessage.ToUserName = recievedMsg.FromUserName;
-			sentMessage.Content = recievedMsg.Content;
-			sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
-			return Response.status(Status.OK).entity(sentMessage.generate()).build();
-		} else if (EventMessage.MSG_EVENT_TYPE.equals(msg.MsgType)) {
-			// EventMessage event = (EventMessage) msg;
-			Message event = msg;
-
-			if (event.EventKey.equals(Menu.CONTACT)) {
-				SentTextMessage sentMessage = new SentTextMessage();
-				sentMessage.FromUserName = event.ToUserName;
-				sentMessage.ToUserName = event.FromUserName;
-				sentMessage.Content = "我们的地址是：xxxx";
-				sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
-				return Response.status(Status.OK).entity(sentMessage.generate()).build();
-			} else if (event.EventKey.equals(Menu.BUY)) {
-				SentTextMessage sentMessage = new SentTextMessage();
-				sentMessage.FromUserName = event.ToUserName;
-				sentMessage.ToUserName = event.FromUserName;
-				sentMessage.Content = "请按照以下格式发送消息给我们，谢谢您的支持！";
-				sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
-				return Response.status(Status.OK).entity(sentMessage.generate()).build();
-			}
+		if (msg == null || msg.MsgType == null) {
+			return Response.status(Status.OK).entity("").build();
 		}
-		return Response.status(Status.OK).entity("").build();
+
+		LOGGER.info("Received from [" + msg.FromUserName + "]");
+
+		String content = "";
+		switch (msg.MsgType) {
+		case TextMessage.MSG_TEXT_TYPE:
+			// ReceivedTextMessage recievedMsg = (ReceivedTextMessage) msg;
+			content = msg.Content;
+			break;
+		case EventMessage.MSG_EVENT_TYPE:
+			// EventMessage event = (EventMessage) msg;
+			if (msg.EventKey == null) {
+				break;
+			}
+			switch (msg.EventKey) {
+			case Menu.CONTACT:
+				content = "我们的地址是：xxxx";
+				break;
+			case Menu.BUY:
+				content = "请按照以下格式发送消息给我们，谢谢您的支持！";
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		String response = generateTextMessageResponse(msg, content);
+		return Response.status(Status.OK).entity(response).build();
+	}
+
+	private String generateTextMessageResponse(Message message, String content) {
+		SentTextMessage sentMessage = new SentTextMessage();
+		sentMessage.FromUserName = message.ToUserName;
+		sentMessage.ToUserName = message.FromUserName;
+		sentMessage.Content = content;
+		sentMessage.CreateTime = String.valueOf(Calendar.getInstance().getTimeInMillis());
+		return sentMessage.generate();
 	}
 
 }
